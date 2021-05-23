@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>Shopping Cart</title>
+{% endblock %}
+{% block content %}
+    <h1>Cart</h1>
+    {% if cart %}
+        <button><a href="{% url 'make-order' %}">Order</a></button>
+        {% for item in cart %}
+            <hr><h1><a href="{{ item.product_id.get_absolute_url }}">{{ item.product_id.title }}</a><h2>Quantity: {{ item.quantity }}</h2><h3>Price: {% widthratio item.product_id.price 1 item.quantity %}</h3></h1>
+            <button><a href="{% url 'cart-delete' item.product_id_id %}">Удалить из корзины</a></button>
+            <span style="font-size: 25px"><a href="{% url 'quantity' item.product_id_id '+' %}">+</a></span>
+            <span style="font-size: 25px"><a href="{% url 'quantity' item.product_id_id '-' %}">-</a></span>
+            <hr>
+        {% endfor %}
+    {% endif %}
+    {% if empty %}
+        <h1>{{ empty }}</h1>
+    {% endif %}
+{% endblock %}

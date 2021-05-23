@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <h1>Order Delivery Type:</h1>
+        <h2>{{ orderdetails.get_delivery_type_display }}</h2>
+    <h1>Order comment:</h1>
+        <h2>{{ orderdetails.comment }}</h2>
+    <hr>
+    {% for item in orders %}
+        <hr><h1>{{ item.product_id.title }}<h2>Quantity: {{ item.quantity }}</h2><h3>Price: {% widthratio item.product_id.price 1 item.quantity %}</h3></h1><hr>
+    {% endfor %}
+{% endblock %}

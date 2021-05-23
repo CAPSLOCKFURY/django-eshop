@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>All orders</title>
+{% endblock %}
+
+{% block content %}
+    {% if orders %}
+        {% for order in orders %}
+            <h1><a href="{{ order.get_absolute_url }}">{{ order.order_date }}</a></h1>
+        {% endfor %}
+    {% else %}
+        <h1>You have no orders yet</h1>
+    {% endif %}
+{% endblock %}

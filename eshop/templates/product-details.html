@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+    <title>{{ product.title }}</title>
+{% endblock %}
+{% block content %}
+    <h1>{{ product.title }}</h1>
+    <h4><a href="{{ product.category.get_absolute_url }}">{{ product.category.name }}</a></h4>
+    <h2>{{ product.description }}</h2>
+    <h3>{{ product.date }}</h3>
+    <h2>{{ product.price }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Add to cart</button>
+    </form>
+{% endblock %}
