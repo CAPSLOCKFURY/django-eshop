@@ -5,12 +5,19 @@ from eshop.settings import ORDER_FILTER
 class Filter:
     q = {}
 
-    def __init__(self, max_price_args=None, max_price=None, category_id=None):
+    def __init__(self, max_price_args=None, max_price=None, min_price=None, category_id=None):
         self.max_price = max_price
         self.category_id = category_id
+        self.min_price = min_price
 
     def make_filter(self):
-        if int(self.max_price) > 0:
+        if self.min_price is not None and int(self.min_price) > 0:
+            self.q.update({'price__gte': self.min_price})
+        elif self.min_price is not None and int(self.min_price) is 0:
+            if 'price__gte' in self.q:
+                del self.q['price__gte']
+
+        if self.max_price is not None and int(self.max_price) > 0:
             self.q.update({'price__lte': self.max_price})
         elif int(self.max_price) is 0:
             if 'price__lte' in self.q:

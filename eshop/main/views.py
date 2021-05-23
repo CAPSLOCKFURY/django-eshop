@@ -12,7 +12,7 @@ from order.models import Order
 
 def main_view(request):
     products = Product.objects.all().order_by(ORDER_FILTER[request.session.get('filter_by', '0')])
-    f = Filter(max_price=request.session.get('max_price', 0), category_id=request.session.get('category', 0))
+    f = Filter(min_price=request.session.get('min_price', 0), max_price=request.session.get('max_price', 0), category_id=request.session.get('category', 0))
     f.make_filter()
     f = f.get_filter()
     if f:

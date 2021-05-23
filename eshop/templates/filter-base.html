@@ -9,6 +9,9 @@
                 <option value="2">Highest Price</option>
             </select>
         </label>
+        <label>Min price
+            <input type="number" name="min-price" value="{% if request.session.min_price %}{{ request.session.min_price }}{% endif %}">
+        </label>
         <label>Max Price
             <input type="number" name="max-price" value="{% if request.session.max_price %}{{ request.session.max_price }}{% endif %}">
         </label>

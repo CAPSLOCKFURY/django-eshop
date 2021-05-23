@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from cart.models import Cart
 from .models import Order
 from django.contrib.auth.decorators import login_required
@@ -38,6 +38,7 @@ def order_product(request):
             order.save()
             user_cart = Cart.objects.filter(cart_id=request.session['cart_id'], order_id="0")
             user_cart.update(order_id=orderid)
+            return redirect(order.get_absolute_url())
     form = OrderForm()
     return render(request, 'order-product.html', {'form': form})
 
