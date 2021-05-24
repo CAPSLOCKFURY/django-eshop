@@ -12,6 +12,8 @@ urlpatterns = [
     path('admin/add-product', main_views.add_product_view, name='add'),
     path('admin/orders', order_views.all_orders, name='all-orders'),
     path('admin/add-category', main_views.add_category, name='add-category'),
+    path('admin/delete-product/<int:id>', main_views.delete_product, name='delete-product'),
+    path('admin/delete-category/<int:id>', main_views.delete_category, name='delete-cat'),
     path('session/', main_views.session_test),
     # основные урлы
     path('', main_views.main_view, name='main'),

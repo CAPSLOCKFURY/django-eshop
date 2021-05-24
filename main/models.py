@@ -9,7 +9,7 @@ class Product(models.Model):
     description = models.TextField('Description', blank=True)
     date = models.DateTimeField('Date', default=now, blank=True)
     price = models.DecimalField('Price', decimal_places=1, max_digits=10000)
-    category = models.ForeignKey('main.Category', on_delete=models.DO_NOTHING)
+    category = models.ForeignKey('main.Category', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.title

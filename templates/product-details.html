@@ -12,4 +12,9 @@
         {% csrf_token %}
         <button type="submit">Add to cart</button>
     </form>
+    {% if request.user.is_superuser %}
+        <h1>Admin actions:</h1>
+        <button><a href="{% url 'delete-product' product.id %}">Delete product</a></button>
+        <button><a href="{% url 'delete-cat' product.category.id %}">Delete current category</a></button>
+    {% endif %}
 {% endblock %}

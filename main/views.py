@@ -74,4 +74,16 @@ def add_category(request):
     return render(request, 'admin/add-category.html')
 
 
+@login_required
+def delete_product(request, id):
+    product = Product.objects.filter(id=id)
+    product.delete()
+    return redirect('main')
+
+
+@login_required
+def delete_category(request, id):
+    category = Category.objects.filter(id=id)
+    category.delete()
+    return redirect('main')
 
