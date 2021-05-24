@@ -31,3 +31,8 @@
         document.getElementById('category').value = category_option;
     </script>
 </form>
+<form method="get">
+    <input name="q" type="text" placeholder="search" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}">
+    {% csrf_token %}
+    <button type="submit">Search</button>
+</form>

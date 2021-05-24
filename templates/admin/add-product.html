@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% if request.user.username == 'admin' %}
         <form method="post">
             {% csrf_token %}
             {{ form }}
             <button type="submit">Добавить</button>
         </form>
-    {% endif %}
     <h2><a href="{% url 'add-category' %}">Add New Category</a></h2>
 {% endblock %}

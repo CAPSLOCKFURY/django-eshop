@@ -17,7 +17,10 @@ def main_view(request):
     f = f.get_filter()
     if f:
         products = products.filter(**f)
-
+    if request.method == "GET":
+        q = request.GET.get("q")
+        if q:
+            products = products.filter(title__icontains=q)
     ctx = {'products': products}
     return render(request, 'index.html', ctx)
 

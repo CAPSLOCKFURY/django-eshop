@@ -7,7 +7,7 @@
     <h1><a href="{% url 'main' %}">Main</a></h1>
     <h2><a href="{% url 'cart' %}">Shopping Cart</a></h2>
     <h2><a href="{% url 'order_history' %}">Order History</a></h2>
-    {% if user.username == 'admin' %}
+    {% if request.user.is_superuser %}
         <h1><a href="{% url 'add' %}">Add Product</a></h1>
         <h1><a href="{% url 'all-orders' %}">All orders</a></h1>
     {% endif %}
