@@ -22,7 +22,7 @@ def main_view(request):
         q = request.GET.get("q")
         if q:
             products = products.filter(title__icontains=q)
-    p = Paginator(products, 3)
+    p = Paginator(products, request.session.get('paginate_by', 5))
     products = p.page(request.GET.get('page', 1))
     ctx = {'products': products}
     return render(request, 'index.html', ctx)

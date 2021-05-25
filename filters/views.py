@@ -8,13 +8,15 @@ def save_filter(request):
     min_price = request.POST['min-price']
     max_price = request.POST['max-price']
     category = request.POST['category']
+    paginate_by = request.POST['objs-on-page']
     request.session['filter_by'] = order_by
-    filter_arr = [max_price, min_price, category]
-    filter_name_arr = ['max_price', 'min_price', 'category']
+    filter_arr = [max_price, min_price, category, paginate_by]
+    filter_name_arr = ['max_price', 'min_price', 'category', 'paginate_by']
+    assert len(filter_arr) == len(filter_name_arr), "Filter arrays failed, length is different"
     for f, f_name in zip(filter_arr, filter_name_arr):
         if f:
             request.session[f'{f_name}'] = f
         elif (f == 0 or not f) and f_name in request.session:
             del request.session[f'{f_name}']
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 

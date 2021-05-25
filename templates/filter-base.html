@@ -23,6 +23,9 @@
                 {% endfor %}
             </select>
         </label>
+        <label> Number of products in page
+            <input type="number" max="15" min="1" name="objs-on-page" value="{% if request.session.paginate_by %}{{ request.session.paginate_by }}{% endif %}">
+        </label>
         <button type="submit">Save</button>
     <script>
         const order_option = {% if request.session.filter_by %}{{ request.session.filter_by }}{% else %}0{% endif %};
@@ -33,6 +36,5 @@
 </form>
 <form method="get">
     <input name="q" type="text" placeholder="search" value="{% if request.GET.q %}{{ request.GET.q }}{% endif %}">
-    {% csrf_token %}
     <button type="submit">Search</button>
 </form>
