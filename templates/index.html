@@ -8,4 +8,15 @@
         <h1><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h1>
         <h2>{{ product.price }}</h2>
     {% endfor %}
+    {% if products.has_previous %}
+        <h3 class="pagination"><a href="?page={{ products.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"><--</a></h3>
+    {% endif %}
+    {% if products.has_next %}
+        <h3 class="pagination"><a href="?page={{ products.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">--></a></h3>
+    {% endif %}
+    <style>
+        .pagination {
+            display: inline;
+        }
+    </style>
 {% endblock %}

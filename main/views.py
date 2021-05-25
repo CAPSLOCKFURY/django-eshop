@@ -8,6 +8,7 @@ from eshop.decorators import cart_id_required
 from eshop.settings import ORDER_FILTER
 from filters.models import Filter
 from order.models import Order
+from django.core.paginator import Paginator
 
 
 def main_view(request):
@@ -21,6 +22,8 @@ def main_view(request):
         q = request.GET.get("q")
         if q:
             products = products.filter(title__icontains=q)
+    p = Paginator(products, 3)
+    products = p.page(request.GET.get('page', 1))
     ctx = {'products': products}
     return render(request, 'index.html', ctx)
 
