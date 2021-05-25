@@ -4,10 +4,6 @@
 {% endblock %}
 {% block content %}
     {% include 'filter-base.html' %}
-    {% for product in products %}
-        <h1><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h1>
-        <h2>{{ product.price }}</h2>
-    {% endfor %}
     {% if products.has_previous %}
         <h3 class="pagination"><a href="?page={{ products.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"><--</a></h3>
     {% else %}
@@ -18,6 +14,11 @@
     {% else %}
         <h3 class="pagination"><a>--></a></h3>
     {% endif %}
+    {% for product in products %}
+        <h1><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h1>
+        <h2>{{ product.price }}</h2>
+    {% endfor %}
+
     <style>
         .pagination {
             display: inline;

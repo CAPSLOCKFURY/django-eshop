@@ -8,7 +8,7 @@ from eshop.decorators import cart_id_required
 from eshop.settings import ORDER_FILTER
 from filters.models import Filter
 from order.models import Order
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
 
 
 def main_view(request):
@@ -23,7 +23,10 @@ def main_view(request):
         if q:
             products = products.filter(title__icontains=q)
     p = Paginator(products, request.session.get('paginate_by', 5))
-    products = p.page(request.GET.get('page', 1))
+    try:
+        products = p.page(request.GET.get('page', 1))
+    except EmptyPage:
+        return redirect('/?q={}'.format(request.GET.get('q', '')))
     ctx = {'products': products}
     return render(request, 'index.html', ctx)
 
