@@ -60,7 +60,7 @@ def session_test(request):
 
 
 @login_required
-def add_product_view(request):
+def add_product(request):
     if request.method == "POST":
         form = ProductAddForm(request.POST)
         if form.is_valid():
