@@ -24,7 +24,7 @@
             </select>
         </label>
         <label> Number of products in page
-            <input type="number" max="15" min="1" name="objs_on_page" value="{% if request.session.paginate_by %}{{ request.session.paginate_by }}{% endif %}">
+            <input type="number" max="15" min="1" name="objs_on_page" value="{% if request.session.objs_on_page %}{{ request.session.objs_on_page }}{% endif %}">
         </label>
         <button type="submit">Save</button>
     <script>

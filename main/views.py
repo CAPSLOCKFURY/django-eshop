@@ -26,7 +26,7 @@ def main_view(request):
         products = p.page(request.GET.get('page', 1))
     except EmptyPage:
         return redirect('/?q={}'.format(request.GET.get('q', '')))
-    ctx = {'products': products}
+    ctx = {'products': products, 'paginator': p}
     return render(request, 'index.html', ctx)
 
 
