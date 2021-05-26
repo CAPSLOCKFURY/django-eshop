@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from eshop.decorators import cart_id_required
 from eshop.settings import ORDER_FILTER
 from filters.models import Filter
-from order.models import Order
 from django.core.paginator import Paginator, EmptyPage
 
 
