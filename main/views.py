@@ -22,7 +22,7 @@ def main_view(request):
         q = request.GET.get("q")
         if q:
             products = products.filter(title__icontains=q)
-    p = Paginator(products, request.session.get('paginate_by', 5))
+    p = Paginator(products, request.session.get('objs_on_page', 5))
     try:
         products = p.page(request.GET.get('page', 1))
     except EmptyPage:

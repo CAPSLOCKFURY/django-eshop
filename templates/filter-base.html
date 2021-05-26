@@ -10,10 +10,10 @@
             </select>
         </label>
         <label>Min price
-            <input type="number" name="min-price" value="{% if request.session.min_price %}{{ request.session.min_price }}{% endif %}">
+            <input type="number" name="min_price" value="{% if request.session.min_price %}{{ request.session.min_price }}{% endif %}">
         </label>
         <label>Max Price
-            <input type="number" name="max-price" value="{% if request.session.max_price %}{{ request.session.max_price }}{% endif %}">
+            <input type="number" name="max_price" value="{% if request.session.max_price %}{{ request.session.max_price }}{% endif %}">
         </label>
         <label> Category
             <select name="category" id="category">
@@ -24,7 +24,7 @@
             </select>
         </label>
         <label> Number of products in page
-            <input type="number" max="15" min="1" name="objs-on-page" value="{% if request.session.paginate_by %}{{ request.session.paginate_by }}{% endif %}">
+            <input type="number" max="15" min="1" name="objs_on_page" value="{% if request.session.paginate_by %}{{ request.session.paginate_by }}{% endif %}">
         </label>
         <button type="submit">Save</button>
     <script>

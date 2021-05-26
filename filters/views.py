@@ -4,19 +4,17 @@ from main.models import Category
 
 
 def save_filter(request):
-    order_by = request.POST['order_by']
-    min_price = request.POST['min-price']
-    max_price = request.POST['max-price']
-    category = request.POST['category']
-    paginate_by = request.POST['objs-on-page']
-    request.session['filter_by'] = order_by
-    filter_arr = [max_price, min_price, category, paginate_by]
-    filter_name_arr = ['max_price', 'min_price', 'category', 'paginate_by']
-    assert len(filter_arr) == len(filter_name_arr), "Filter arrays failed, length is different"
-    for f, f_name in zip(filter_arr, filter_name_arr):
-        if f:
-            request.session[f'{f_name}'] = f
-        elif (f == 0 or not f) and f_name in request.session:
-            del request.session[f'{f_name}']
+    request.session['filter_by'] = request.POST['order_by']
+    filter_dict = {}
+    for key, value in request.POST.items():
+        # тк order_by всегда выставляеться в сессию в независимости от значения то мы его не добавляем
+        if key != 'order_by' or key != 'csrfmiddlewaretoken':
+            filter_dict.update({f'{key}': value})
+
+    for key, value in filter_dict.items():
+        if value:
+            request.session[f'{key}'] = value
+        elif (value == 0 or not value) and key in request.session:
+            del request.session[f'{key}']
     return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
