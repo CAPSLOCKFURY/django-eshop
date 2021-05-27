@@ -20,8 +20,8 @@ def all_orders(request):
 
 @cart_id_required
 def order_details(request, id):
-    orders = Cart.objects.filter(order_id=id)
     order_detail = Order.objects.get(order_id=id)
+    orders = Cart.objects.filter(order_id=order_detail)
     ctx = {'orders': orders, 'orderdetails': order_detail}
     return render(request, 'order-details.html', ctx)
 
@@ -36,8 +36,8 @@ def order_product(request):
             order.user_id = request.session['cart_id']
             order.order_id = orderid
             order.save()
-            user_cart = Cart.objects.filter(cart_id=request.session['cart_id'], order_id="0")
-            user_cart.update(order_id=orderid)
+            user_cart = Cart.objects.filter(cart_id=request.session['cart_id'], order_id__isnull=True)
+            user_cart.update(order_id=order)
             return redirect(order.get_absolute_url())
     form = OrderForm()
     return render(request, 'order-product.html', {'form': form})

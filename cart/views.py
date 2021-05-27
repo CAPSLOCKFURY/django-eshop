@@ -6,7 +6,7 @@ from eshop.decorators import cart_id_required
 
 def cart_view(request):
     if 'cart_id' in request.session:
-        user_cart = Cart.objects.filter(cart_id=request.session['cart_id'], order_id="0")
+        user_cart = Cart.objects.filter(cart_id=request.session['cart_id'], order_id__isnull=True)
         ctx = {'cart': user_cart}
     else:
         ctx = {'empty': 'Your cart is empty'}

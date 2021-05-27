@@ -1,5 +1,6 @@
 from django.db import models
 from eshop.settings import ORDER_FILTER
+from main.models import Product
 
 
 class Filter:
@@ -22,4 +23,4 @@ class Filter:
     def get_filter(self):
         return self.q
 
-
+    def get_filtered_products(self, request):

@@ -42,7 +42,7 @@ def product_detail(request, id):
         else:
             cart_id = request.session['cart_id']
 
-        product_exists = Cart.objects.filter(product_id_id=id, cart_id=cart_id, order_id=0)
+        product_exists = Cart.objects.filter(product_id_id=id, cart_id=cart_id, order_id__isnull=True)
         if not product_exists:
             product.add_to_cart(cart_id)
         else:

@@ -19,16 +19,16 @@ class Product(models.Model):
         cart.save()
 
     def remove_from_cart(self, cartid):
-        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id=0)
+        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id__isnull=True)
         cart_product.delete()
 
     def plus_quantity(self, cartid):
-        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id=0)
+        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id__isnull=True)
         cart_product.quantity += 1
         cart_product.save()
 
     def minus_quantity(self, cartid):
-        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id=0)
+        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id__isnull=True)
         cart_product.quantity -= 1
         if cart_product.quantity == 0:
             cart_product.delete()
