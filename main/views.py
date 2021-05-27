@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect, HttpResponse
+from django.shortcuts import render, redirect
 from .models import Product, Category
-from .forms import ProductAddForm
 from cart.models import Cart
 import uuid
 from django.contrib.auth.decorators import login_required
-from eshop.decorators import cart_id_required
 from eshop.settings import ORDER_FILTER
 from filters.models import Filter
 from django.core.paginator import Paginator, EmptyPage
@@ -52,31 +50,6 @@ def product_detail(request, id):
 
     ctx = {'product': product}
     return render(request, 'product-details.html', ctx)
-
-
-@cart_id_required
-def session_test(request):
-    return HttpResponse('<h1>{}</h1>'.format(request.session['cart_id']))
-
-
-@login_required
-def add_product(request):
-    if request.method == "POST":
-        form = ProductAddForm(request.POST)
-        if form.is_valid():
-            prod = form.save()
-            return redirect(f'/product/{prod.id}')
-    form = ProductAddForm()
-    return render(request, 'admin/add-product.html', {"form": form})
-
-
-@login_required
-def add_category(request):
-    if request.method == "POST":
-        if request.POST['cat-name']:
-            cat = Category(name=request.POST['cat-name'])
-            cat.save()
-    return render(request, 'admin/add-category.html')
 
 
 @login_required
