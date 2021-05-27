@@ -1,10 +1,8 @@
 from django.shortcuts import render, redirect
-from cart.models import Cart
 from .models import Order
 from django.contrib.auth.decorators import login_required
 from eshop.decorators import cart_id_required
 from .forms import OrderForm
-import uuid
 
 
 @login_required
@@ -22,12 +20,14 @@ def order_details(request, id):
 
 @cart_id_required
 def order_product(request):
+
     if request.method == "POST":
         order = OrderForm(request.POST)
         if order.is_valid():
             order = order.save(commit=False)
             order.make_order(request.session['cart_id'])
             return redirect(order.get_absolute_url())
+
     form = OrderForm()
     return render(request, 'order-product.html', {'form': form})
 
