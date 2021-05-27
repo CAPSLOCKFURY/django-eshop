@@ -3,6 +3,7 @@ from .models import Order
 from django.contrib.auth.decorators import login_required
 from eshop.decorators import cart_id_required
 from .forms import OrderForm
+from eshop.funcs import cart_id_get_or_create
 
 
 @login_required
@@ -33,9 +34,6 @@ def order_product(request):
 
 
 def order_history(request):
-    if 'cart_id' in request.session:
-        orders = Order.objects.filter(user_id=request.session['cart_id']).order_by('-id')
-        ctx = {'orders': orders}
-    else:
-        ctx = {}
+    orders = Order.objects.filter(user_id=cart_id_get_or_create(request)).order_by('-id')
+    ctx = {'orders': orders}
     return render(request, 'admin/orders.html', ctx)
