@@ -1,24 +1,16 @@
 from django.shortcuts import render, redirect
 from .models import Product, Category
-from cart.models import Cart
 import uuid
 from django.contrib.auth.decorators import login_required
-from eshop.settings import ORDER_FILTER
 from filters.models import Filter
 from django.core.paginator import Paginator, EmptyPage
 
 
 def main_view(request):
-    products = Product.objects.all().order_by(ORDER_FILTER[request.session.get('filter_by', '0')])
-    f = Filter(min_price=request.session.get('min_price', 0), max_price=request.session.get('max_price', 0), category_id=request.session.get('category', 0))
-    f.make_filter()
-    f = f.get_filter()
-    if f:
-        products = products.filter(**f)
+    products = Filter().get_filtered_products(request)
     if request.method == "GET":
-        q = request.GET.get("q")
-        if q:
-            products = products.filter(title__icontains=q)
+        q = request.GET.get("q", "")
+        products = products.filter(title__icontains=q)
     p = Paginator(products, request.session.get('objs_on_page', 5))
     try:
         products = p.page(request.GET.get('page', 1))
@@ -41,12 +33,7 @@ def product_detail(request, id):
             cart_id = request.session['cart_id']
         else:
             cart_id = request.session['cart_id']
-
-        product_exists = Cart.objects.filter(product_id_id=id, cart_id=cart_id, order_id__isnull=True)
-        if not product_exists:
-            product.add_to_cart(cart_id)
-        else:
-            product.plus_quantity(cart_id)
+        product.add_to_cart(cart_id)
 
     ctx = {'product': product}
     return render(request, 'product-details.html', ctx)

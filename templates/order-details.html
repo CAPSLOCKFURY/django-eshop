@@ -5,11 +5,11 @@
 
 {% block content %}
     <h1>Order Delivery Type:</h1>
-        <h2>{{ orderdetails.get_delivery_type_display }}</h2>
+        <h2>{{ orders.get_delivery_type_display }}</h2>
     <h1>Order comment:</h1>
-        <h2>{{ orderdetails.comment }}</h2>
+        <h2>{{ orders.comment }}</h2>
     <hr>
-    {% for item in orders %}
+    {% for item in orders.cart_set.all %}
         <hr><h1>{{ item.product_id.title }}<h2>Quantity: {{ item.quantity }}</h2><h3>Price: {% widthratio item.product_id.price 1 item.quantity %}</h3></h1><hr>
     {% endfor %}
 {% endblock %}

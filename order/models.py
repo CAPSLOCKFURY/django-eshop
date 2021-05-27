@@ -1,4 +1,6 @@
 from django.db import models
+import uuid
+from cart.models import Cart
 
 
 class Order(models.Model):
@@ -16,6 +18,14 @@ class Order(models.Model):
 
     def __str__(self):
         return str(self.order_date)
+
+    def make_order(self, cart_id):
+        order_id = uuid.uuid4().hex
+        self.user_id = cart_id
+        self.order_id = order_id
+        self.save()
+        user_cart = Cart.objects.filter(cart_id=cart_id, order_id__isnull=True)
+        user_cart.update(order_id=self)
 
     def get_absolute_url(self):
         return f'/order-details/{self.order_id}'

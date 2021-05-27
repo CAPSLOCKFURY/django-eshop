@@ -10,19 +10,13 @@ import uuid
 @login_required
 def all_orders(request):
     orders = Order.objects.all().order_by('-id')
-    if orders:
-        ctx = {'orders': orders}
-    else:
-        ctx = {'error': 'No orders'}
-
-    return render(request, 'admin/orders.html', ctx)
+    return render(request, 'admin/orders.html', {'orders': orders})
 
 
 @cart_id_required
 def order_details(request, id):
-    order_detail = Order.objects.get(order_id=id)
-    orders = Cart.objects.filter(order_id=order_detail)
-    ctx = {'orders': orders, 'orderdetails': order_detail}
+    orders = Order.objects.get(order_id=id)
+    ctx = {'orders': orders}
     return render(request, 'order-details.html', ctx)
 
 
@@ -32,12 +26,7 @@ def order_product(request):
         order = OrderForm(request.POST)
         if order.is_valid():
             order = order.save(commit=False)
-            orderid = uuid.uuid4().hex
-            order.user_id = request.session['cart_id']
-            order.order_id = orderid
-            order.save()
-            user_cart = Cart.objects.filter(cart_id=request.session['cart_id'], order_id__isnull=True)
-            user_cart.update(order_id=order)
+            order.make_order(request.session['cart_id'])
             return redirect(order.get_absolute_url())
     form = OrderForm()
     return render(request, 'order-product.html', {'form': form})

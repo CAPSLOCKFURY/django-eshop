@@ -20,7 +20,17 @@ class Filter:
                 if f'{key}' in self.q:
                     del self.q[f'{key}']
 
+    @property
     def get_filter(self):
         return self.q
 
     def get_filtered_products(self, request):
+        products = Product.objects.all().order_by(ORDER_FILTER[request.session.get('filter_by', '0')])
+        self.__init__(min_price=request.session.get('min_price', 0), max_price=request.session.get('max_price', 0),
+                      category_id=request.session.get('category', 0))
+        self.make_filter()
+        f = self.get_filter
+        if f:
+            return products.filter(**f)
+        else:
+            return products

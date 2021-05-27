@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 from django.utils.timezone import now
 from cart.models import Cart
 
@@ -14,14 +13,6 @@ class Product(models.Model):
     def __str__(self):
         return self.title
 
-    def add_to_cart(self, cartid):
-        cart = Cart(cart_id=cartid, quantity=1, product_id_id=self.id)
-        cart.save()
-
-    def remove_from_cart(self, cartid):
-        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id__isnull=True)
-        cart_product.delete()
-
     def plus_quantity(self, cartid):
         cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id__isnull=True)
         cart_product.quantity += 1
@@ -34,6 +25,18 @@ class Product(models.Model):
             cart_product.delete()
         else:
             cart_product.save()
+
+    def remove_from_cart(self, cartid):
+        cart_product = Cart.objects.get(cart_id=cartid, product_id_id=self.id, order_id__isnull=True)
+        cart_product.delete()
+
+    def add_to_cart(self, cartid):
+        product_exists = Cart.objects.filter(product_id_id=self.id, cart_id=cartid, order_id__isnull=True)
+        if not product_exists:
+            cart = Cart(cart_id=cartid, quantity=1, product_id_id=self.id)
+            cart.save()
+        else:
+            self.plus_quantity(cartid)
 
     def get_absolute_url(self):
         return f'/product/{self.id}'
