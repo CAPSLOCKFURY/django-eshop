@@ -1,3 +1,8 @@
+"""
+ Author : Vadim Dembitskii (CAPSLOCKFURY)
+ License : The MIT License
+"""
+
 from django.db import models
 
 

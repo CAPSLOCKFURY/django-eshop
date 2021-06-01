@@ -1,3 +1,8 @@
+"""
+ Author : Vadim Dembitskii (CAPSLOCKFURY)
+ License : The MIT License
+"""
+
 from django.shortcuts import render, redirect
 from cart.models import Cart
 from main.models import Product

@@ -1,3 +1,8 @@
+"""
+ Author : Vadim Dembitskii (CAPSLOCKFURY)
+ License : The MIT License
+"""
+
 from functools import wraps
 from django.shortcuts import redirect
 from eshop.settings import CART_ID_REDIRECT
