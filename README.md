@@ -1,22 +1,23 @@
-This is my django-eshop-cms.
+#This is my django-eshop-cms.
+###All code is made by Vadim Dembitskii(CAPLOCKFURY) with MIT license
 
-Features:
--Managing all products at admin
--Making new categories and adding specifications to it
--Making Products and adding specifications to it
--Adding to cart, ordering, and seeing order hisotry
-with no need of login
--Simple user filters, like number of products on page,
-product sorting, price range
--Advanced filters, that allow to filter products by their
-specifications, new specifications, can be added at admin panel
-with no need changing the code
+##Features:
+<ul>
+    <li>Managing all products at admin</li>  
+    <li>Making new categories and adding specifications to it</li>  
+    <li>Making Products and adding specifications to it</li>  
+    <li>Adding to cart, ordering, and seeing order hisotry with no need of login</li>  
+    <li>Simple user filters, like number of products on page, product sorting, price range</li> 
+    <li>Advanced filters, that allow to filter products by their specifications, new specifications, can be added at admin panel with no need of changing the code</li>
+</ul>
 
-Things TODO:
--Adding Images
--Adding new fields to Order model
--Adding new features to specifications, like slug, and spec prefix
--Adding login and registration with saving previous user actions
--Adding number of views to each product
--Adding email notifications
--Making top products on the main page
+##Things TODO:
+<ul>
+    <li>Adding Images</li>  
+    <li>Adding new fields to Order model</li>  
+    <li>Adding new features to specifications, like slug, and spec prefix</li>  
+    <li>Adding login and registration with saving previous user actions</li>  
+    <li>Adding number of views to each product</li>  
+    <li>Adding email notifications</li>  
+    <li>Making top products on the main page</li>
+</ul>
