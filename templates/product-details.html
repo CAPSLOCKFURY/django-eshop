@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
 {% block title %}
     <title>{{ product.title }}</title>
 {% endblock %}
@@ -11,7 +11,7 @@
     <hr>
     <h1>Charasteristics:</h1>
     {% for spec in product.specification_set.all %}
-        <h2>{{ spec.name }}: {{ spec.specification }}</h2>
+        <h2>{{ spec.name.name }}: {{ spec.specification }}</h2>
     {% endfor %}
     <hr>
     <form method="post">

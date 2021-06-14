@@ -8,35 +8,41 @@ from .models import Product, Category
 from django.contrib.auth.decorators import login_required
 from filters.models import Filter
 from django.core.paginator import Paginator, EmptyPage
-from eshop.funcs import cart_id_get_or_create
+from eshop.funcs import cart_id_get_or_create, get_url_kwargs
 
 
-def main_view(request):
-    products = Filter().get_filtered_products(request)
+def main_view(request, category):
+    products = Filter().get_filtered_products(request, category)
 
     if request.method == "GET":
         q = request.GET.get("q", "")
         products = products.filter(title__icontains=q)
+        q_filter = Filter().get_specs_filters(request)
+        for filter in q_filter:
+            products = products.filter(**filter)
+            if products:
+                continue
+            else:
+                break
 
     p = Paginator(products, request.session.get('objs_on_page', 5))
 
     try:
         products = p.page(request.GET.get('page', 1))
     except EmptyPage:
-        return redirect('/?q={}'.format(request.GET.get('q', '')))
+        return redirect('/category/{}?{}'.format(category, get_url_kwargs(request)))
 
-    ctx = {'products': products, 'paginator': p}
+    ctx = {'products': products, 'paginator': p, 'category_id': category}
     return render(request, 'index.html', ctx)
 
 
-def category_view(request, cat):
-    request.session['category'] = cat
-    return redirect('main')
+def category_view(request):
+    categories = Category.objects.all()
+    return render(request, 'all-categories.html', {'categories': categories})
 
 
 def product_detail(request, id):
     product = Product.objects.get(id=id)
-
     if request.method == "POST":
         cart_id = cart_id_get_or_create(request)
         product.add_to_cart(cart_id)
@@ -58,3 +64,7 @@ def delete_category(request, id):
     category.delete()
     return redirect('main')
 
+
+def category_specs(request, id):
+    category = Category.objects.get(id=id)
+    return render(request, 'specifications.html', {'category': category})

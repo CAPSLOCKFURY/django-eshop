@@ -1,3 +1,8 @@
+"""
+ Author : Vadim Dembitskii (CAPSLOCKFURY)
+ License : The MIT License
+"""
+
 from django.shortcuts import render, redirect
 from .models import Order
 from django.contrib.auth.decorators import login_required

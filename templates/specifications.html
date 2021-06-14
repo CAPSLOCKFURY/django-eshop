@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% load specification_tags %}
+
+
+{% block content %}
+    {% get_specs_dictionary as dict %}
+    <form action="{% url 'category-products' category.id %}" method="get">
+        {% for spec in category.cat.all %}
+            {% if spec.is_filter %}
+                <h1>{{ spec.name }}s:</h1>
+                {% get_specifications spec.name category as specs %}
+                {% for spec1 in specs %}
+                    {% if spec.name in dict %}
+                        {% check_if_checked spec.name spec1.specification dict as is_checked %}
+                    {% endif %}
+                    <input type="checkbox" name="{{ spec.name }}" value="{{ spec1.specification }}" {% if is_checked %}checked{% endif %}>{{ spec1.specification }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+        <button type="submit">Filter</button>
+    </form>
+{% endblock %}

@@ -15,23 +15,13 @@
         <label>Max Price
             <input type="number" name="max_price" value="{% if request.session.max_price %}{{ request.session.max_price }}{% endif %}">
         </label>
-        <label> Category
-            <select name="category" id="category">
-                <option value="0">All</option>
-                {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                {% endfor %}
-            </select>
-        </label>
         <label> Number of products in page
             <input type="number" max="15" min="1" name="objs_on_page" value="{% if request.session.objs_on_page %}{{ request.session.objs_on_page }}{% endif %}">
         </label>
         <button type="submit">Save</button>
     <script>
         const order_option = {% if request.session.filter_by %}{{ request.session.filter_by }}{% else %}0{% endif %};
-        const category_option = {% if request.session.category %}{{ request.session.category }}{% else %}0{% endif %};
         document.getElementById('order-by').value= order_option;
-        document.getElementById('category').value = category_option;
     </script>
 </form>
 <form method="get">

@@ -1,8 +1,3 @@
-"""
- Author : Vadim Dembitskii (CAPSLOCKFURY)
- License : The MIT License
-"""
-
 from .models import Product
 from django.forms import ModelForm, TextInput, NumberInput
 

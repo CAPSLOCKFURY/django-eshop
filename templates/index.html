@@ -1,25 +1,29 @@
-{% extends 'base.html' %}
+{% extends 'base/base.html' %}
+{% load specification_tags %}
 {% block title %}
     <title>Main</title>
 {% endblock %}
 {% block content %}
-    {% include 'filter-base.html' %}
+    {% get_specifications_from_get_params as specs_params %}
+    <button><a href="{% url 'specifications' category_id %}?{{ specs_params }}">Specifications</a></button>
+    {% get_specifications_from_get_params as link %}
+    {% include 'base/filter-base.html' %}
     {% if products.has_previous %}
-        <h3 class="pagination"><a href="?page={{ products.previous_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"><--</a></h3>
+        <h3 class="pagination"><a href="?page={{ products.previous_page_number }}{{ link }}"><--</a></h3>
     {% else %}
         <h3 class="pagination"><a><--</a></h3>
     {% endif %}
         {% for page in paginator.page_range %}
             {% if page <= products.number|add:2 and page >= products.number|add:-2 %}
                 {% if products.number != page %}
-                    <h3 class="pagination"><a href="?page={{ page }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">{{ page }}</a></h3>
+                    <h3 class="pagination"><a href="?page={{ page }}{{ link }}">{{ page }}</a></h3>
                 {% else %}
                     <h3 class="pagination"><a>{{ page }}</a></h3>
                 {% endif %}
             {% endif %}
         {% endfor %}
     {% if products.has_next %}
-        <h3 class="pagination"><a href="?page={{ products.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}">--></a></h3>
+        <h3 class="pagination"><a href="?page={{ products.next_page_number }}{{ link }}">--></a></h3>
     {% else %}
         <h3 class="pagination"><a>--></a></h3>
     {% endif %}

@@ -29,8 +29,26 @@ class Filter:
     def get_filter(self):
         return self.q
 
-    def get_filtered_products(self, request):
-        products = Product.objects.all().order_by(ORDER_FILTER[request.session.get('filter_by', '0')])
+    @staticmethod
+    def get_specs_filters(request):
+        specs_keys = []
+        q_filter = []
+
+        for key in request.GET:
+            if key != 'page' and key != 'q':
+                specs_keys.append(key)
+
+        for key in specs_keys:
+            values = request.GET.getlist(f'{key}')
+            if len(values) > 1:
+                q_filter.append({'specification__name__name': key, 'specification__specification__in': values})
+            elif len(values) == 1:
+                q_filter.append({'specification__name__name': key, 'specification__specification': values[0]})
+
+        return q_filter
+
+    def get_filtered_products(self, request, category):
+        products = Product.objects.filter(category_id=category, posted=True).order_by(ORDER_FILTER[request.session.get('filter_by', '0')])
         self.__init__(min_price=request.session.get('min_price', 0), max_price=request.session.get('max_price', 0),
                       category_id=request.session.get('category', 0))
         self.make_filter()

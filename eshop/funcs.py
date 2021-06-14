@@ -13,3 +13,20 @@ def cart_id_get_or_create(request):
     else:
         cart_id = request.session['cart_id']
     return cart_id
+
+
+def get_url_kwargs(request):
+    keys = []
+    link = ['']
+    request = request.GET.copy()
+
+    for key in request:
+        if key != 'page':
+            keys.append(key)
+
+    for key in keys:
+        values = request.getlist(f'{key}')
+        for value in values:
+            link.append(f'&{key}={value}')
+
+    return ''.join(link)

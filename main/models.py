@@ -6,14 +6,16 @@
 from django.db import models
 from django.utils.timezone import now
 from cart.models import Cart
+from django.urls import reverse
 
 
 class Product(models.Model):
     title = models.CharField('Title', max_length=516)
-    description = models.TextField('Description', blank=True)
+    description = models.TextField('Description', blank=True, help_text='This field is optional')
     date = models.DateTimeField('Date', default=now, blank=True)
-    price = models.DecimalField('Price', decimal_places=1, max_digits=10000)
+    price = models.DecimalField('Price', decimal_places=1, max_digits=10000, help_text='Price in usd')
     category = models.ForeignKey('main.Category', on_delete=models.CASCADE, null=True)
+    posted = models.BooleanField(default=True, help_text='Is checked it will show up at the shop')
 
     def __str__(self):
         return self.title
@@ -44,7 +46,7 @@ class Product(models.Model):
             self.plus_quantity(cartid)
 
     def get_absolute_url(self):
-        return f'/product/{self.id}'
+        return reverse('product', kwargs={"id": self.id})
 
 
 class Category(models.Model):
@@ -57,4 +59,7 @@ class Category(models.Model):
         verbose_name_plural = "categories"
 
     def get_absolute_url(self):
-        return f'/category/{self.id}'
+        return reverse('category-products', kwargs={'category': self.id})
+
+    def get_specs_absolute_url(self):
+        return reverse('specifications', kwargs={"id": self.id})
