@@ -4,7 +4,7 @@
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from main import views as main_views
 from cart import views as cart_views
 from order import views as order_views
@@ -20,6 +20,7 @@ urlpatterns = [
     # основные урлы
     path('', main_views.category_view, name='main'),
     path('category/<int:category>', main_views.main_view, name='category-products'),
+    path('specifications/<int:id>', main_views.category_specs, name='specifications'),
     path('product/<int:id>', main_views.product_detail, name='product'),
     path('filters/', filter_views.save_filter, name='filter'),
     path('order-history/', order_views.order_history, name='order_history'),
@@ -30,6 +31,12 @@ urlpatterns = [
     # урлы заказов
     path('order-product/', order_views.order_product, name='make-order'),
     path('order-details/<str:id>', order_views.order_details, name='order-details'),
-    # тест урлы
-    path('specifications/<int:id>', main_views.category_specs, name='specifications'),
+    # api urls
+    path('api/main/', include('main.api.urls')),
+    path('api/cart/', include('cart.api.urls')),
+    path('api/filters/', include('filters.api.urls')),
+    path('api/order/', include('order.api.urls')),
+    path('api/specifications/', include('specifications.api.urls')),
+    path('api/test', main_views.test_api)
 ]
+

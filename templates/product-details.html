@@ -10,7 +10,7 @@
     <h2>{{ product.price }}</h2>
     <hr>
     <h1>Charasteristics:</h1>
-    {% for spec in product.specification_set.all %}
+    {% for spec in product.specifications.all %}
         <h2>{{ spec.name.name }}: {{ spec.specification }}</h2>
     {% endfor %}
     <hr>

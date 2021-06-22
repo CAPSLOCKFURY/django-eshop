@@ -13,6 +13,5 @@ class Cart(models.Model):
     order_id = models.ForeignKey('order.Order', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        #return f'{self.product_id}|{self.quantity}|{self.cart_id}'
         return self.cart_id
 

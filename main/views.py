@@ -68,3 +68,7 @@ def delete_category(request, id):
 def category_specs(request, id):
     category = Category.objects.get(id=id)
     return render(request, 'specifications.html', {'category': category})
+
+
+def test_api(request):
+    return render(request, 'test-api.html')

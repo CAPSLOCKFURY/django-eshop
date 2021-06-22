@@ -5,7 +5,7 @@
 {% block content %}
     {% get_specs_dictionary as dict %}
     <form action="{% url 'category-products' category.id %}" method="get">
-        {% for spec in category.cat.all %}
+        {% for spec in category.cat_specs.all %}
             {% if spec.is_filter %}
                 <h1>{{ spec.name }}s:</h1>
                 {% get_specifications spec.name category as specs %}

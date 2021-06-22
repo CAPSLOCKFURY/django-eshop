@@ -41,13 +41,13 @@ class Filter:
         for key in specs_keys:
             values = request.GET.getlist(f'{key}')
             if len(values) > 1:
-                q_filter.append({'specification__name__name': key, 'specification__specification__in': values})
+                q_filter.append({'specifications__name__name': key, 'specifications__specification__in': values})
             elif len(values) == 1:
-                q_filter.append({'specification__name__name': key, 'specification__specification': values[0]})
+                q_filter.append({'specifications__name__name': key, 'specifications__specification': values[0]})
 
         return q_filter
 
-    def get_filtered_products(self, request, category):
+    def get_filtered_products(self, request, category) -> Product:
         products = Product.objects.filter(category_id=category, posted=True).order_by(ORDER_FILTER[request.session.get('filter_by', '0')])
         self.__init__(min_price=request.session.get('min_price', 0), max_price=request.session.get('max_price', 0),
                       category_id=request.session.get('category', 0))
